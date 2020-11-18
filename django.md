@@ -43,8 +43,8 @@ python manage.py createsuperuser
 ```
 
 Register model to admin interface
-```
-File: <appname>/admin.py
+```python
+# File: <appname>/admin.py
 
 from django.contrib import admin
 
