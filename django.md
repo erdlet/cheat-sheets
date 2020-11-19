@@ -78,7 +78,7 @@ Generic List View
 ```python
 from django.views import generic
 
-from polls.models import Question
+from app.models import Example
 
 class IndexView(generic.ListView):
 	template_name = 'example/index.html'
@@ -92,7 +92,7 @@ Generic Detail View
 ```python
 from django.views import generic
 
-from polls.models import Example
+from app.models import Example
 
 class DetailView(generic.DetailView):
 	# Model name in template is 'example' as long as 'Example' is a Django Model
