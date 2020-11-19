@@ -11,14 +11,23 @@ Creates an new app
 python manage.py startapp <appname>
 ```
 
-## Operational stuff
+## Infrastructure
 
 Runs the dev server
 ```bash
 python manage.py runserver
 ```
 
-### Database migration
+## Models
+
+Nicer object names
+```python
+class MyObject:
+  # ...
+  
+  def __str__(self):
+    return "show information"
+```
 
 Run all unapplied database migrations
 ```bash
@@ -35,7 +44,63 @@ Show resulting SQL from migration
 python manage.py sqlmigrate <appname> <migration-id>
 ```
 
-## Admin handling
+## Views
+
+Simple detail view for single object
+```python
+from django.shortcuts import get_object_or_404, render
+
+from example.models import Example
+
+def detail(request, question_id):
+	example = get_object_or_404(Example, pk=example_id)
+	return render(request, 'example/detail.html', {'example': example})
+
+```
+
+### Template Control structure
+
+for-loop
+```html
+{% for item in item_list%}
+  
+{% endfor %}
+```
+
+if/else
+```html
+{% if True %}
+  <!-- Handle case for True -->
+{% else %}
+  <!-- Handle case for False -->
+{% endif %}
+```
+
+### URL Handling
+Use path name to determine URL in single app project
+```python
+# File: urls.py
+path('<int:example_id>/', example_controller.detail, name='detail'),
+
+# File: example.html
+<a href="{% url 'detail' example.id %}">{{ example.text }}</a>
+```
+
+
+Use path name to determine URL in multi app project
+```python
+# File: urls.py
+app_name = 'example'
+urlpatterns = [
+...,
+path('<int:example_id>/', example_controller.detail, name='detail'),
+]
+
+# File: example.html
+<a href="{% url 'example:detail' example.id %}">{{ example.text }}</a>
+```
+
+## Admin interface
 
 Create superuser
 ```bash
@@ -58,13 +123,4 @@ admin.site.register(<myModel>)
 Check for issues in the application
 ```bash
 python manage.py check
-```
-
-Nicer object names
-```python
-class MyObject:
-  # ...
-  
-  def __str__(self):
-    return "show information"
 ```
