@@ -194,6 +194,44 @@ from .models import <myModel>
 admin.site.register(<myModel>)
 ```
 
+Group Admin Form elements
+```python
+from django.contrib import admin
+
+from .models import Example
+
+class ExampleAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None, {'fields': ['example_field_one']}),
+		('Date information', {'fields': ['example_date']})
+	]
+
+admin.site.register(Example, ExampleAdmin)
+```
+
+Inline related object
+
+```python
+from django.contrib import admin
+
+from .models import Example, Foo
+
+# Or StackedInline, if it should take more screen space
+class FooInline(admin.TabularInline):
+	model = Foo
+	extra = 3
+
+class ExampleAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None, {'fields': ['example_field_one']}),
+		('Date information', {'fields': ['example_date']})
+	]
+	inlines = [FooInline]
+
+admin.site.register(Example, ExampleAdmin)
+```
+
+
 ## Misc
 
 Check for issues in the application
