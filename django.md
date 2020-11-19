@@ -58,6 +58,49 @@ def detail(request, question_id):
 
 ```
 
+Sublime Snippet for Form
+Form Snippet
+```xml
+<snippet>
+	<content><![CDATA[
+<form action="{% url '${1}' ${2} %}" method="${3:post}">
+	{% csrf_token %}
+	${4}
+</form>
+]]></content>
+	
+	<tabTrigger>djform</tabTrigger>
+	<scope>text.html.basic</scope>
+</snippet>
+```
+
+Generic List View
+```python
+from django.views import generic
+
+from polls.models import Question
+
+class IndexView(generic.ListView):
+	template_name = 'example/index.html'
+	context_object_name = 'first_five_examples'
+
+	def get_queryset(self):
+		return Example.objects[:5]
+```
+
+Generic Detail View
+```python
+from django.views import generic
+
+from polls.models import Example
+
+class DetailView(generic.DetailView):
+	# Model name in template is 'example' as long as 'Example' is a Django Model
+	model = Example
+	# Override default template name
+	template_name = 'example/detail.html'
+```
+
 ### Template Control structure
 
 for-loop
@@ -65,6 +108,11 @@ for-loop
 {% for item in item_list%}
   
 {% endfor %}
+```
+
+Counter in for-loops:
+```html
+{{ forloop.counter }}
 ```
 
 if/else
@@ -76,6 +124,20 @@ if/else
 {% endif %}
 ```
 
+if/else Sublime Snippet
+```xml
+<snippet>
+	<content><![CDATA[
+{% if ${1} %}
+	${2}
+{% endif %}
+]]></content>
+	<tabTrigger>djif</tabTrigger>
+	<scope>text.html.basic</scope>
+</snippet>
+
+```
+
 ### URL Handling
 Use path name to determine URL in single app project
 ```python
@@ -84,6 +146,20 @@ path('<int:example_id>/', example_controller.detail, name='detail'),
 
 # File: example.html
 <a href="{% url 'detail' example.id %}">{{ example.text }}</a>
+```
+
+Sublime HTML Snippet
+```xml
+URL Snippet
+```xml
+<snippet>
+	<content><![CDATA[
+{% url '${1}' ${2}%}
+]]></content>
+	
+	<tabTrigger>djurl</tabTrigger>
+	<scope>text.html.basic</scope>
+</snippet>
 ```
 
 
